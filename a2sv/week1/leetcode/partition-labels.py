@@ -1,11 +1,16 @@
 class Solution:
     def partitionLabels(self, s: str) -> List[int]:
-        occur = {char: i for i, char in enumerate(s)}
-        part = []
-        first = last = 0
-        for i, char in enumerate(s):
-            last = max(last, occur[char])
+        last = s.rindex(s[0])
+        first = 0
+        result = []
+        for i in range(len(s)):
             if i == last:
-                part.append(last - first + 1)
-                first = i + 1
-        return part 
+                result.append(last - first + 1)
+                first = last +1
+                if i < len(s)-1:
+                    last = s.rindex(s[i+1])
+                
+            if s.rindex(s[i]) > last:
+                last = s.rindex(s[i])
+
+        return result
